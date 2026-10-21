@@ -36,14 +36,16 @@ func (rd *Reader) Next() (Event, error) {
 	seen := false
 	for {
 		line, err := rd.r.ReadString('\n')
-		if err != nil {
-			if err == io.EOF {
-				if !seen {
-					return Event{}, io.EOF
-				}
-				return Event{}, io.ErrUnexpectedEOF
-			}
+		if err != nil && err != io.EOF {
 			return Event{}, err
+		}
+		if err == io.EOF {
+			// A final line without a newline, or a dangling event without
+			// its terminating blank line, is a truncated stream.
+			if line == "" && !seen {
+				return Event{}, io.EOF
+			}
+			return Event{}, io.ErrUnexpectedEOF
 		}
 		line = strings.TrimRight(line, "\r\n")
 		if line == "" {
