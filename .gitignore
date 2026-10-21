@@ -1,0 +1,19 @@
+# Binaries and build output
+/llm-gateway
+/loadgen
+/bin/
+/dist/
+*.exe
+*.test
+*.out
+*.prof
+
+# Local secrets and logs
+.env
+*.log
+
+# Editors and OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
