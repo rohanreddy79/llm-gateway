@@ -1,0 +1,71 @@
+# llm-gateway example configuration.
+#
+# Everything here runs offline against the built-in mock provider. The
+# openai and anthropic providers are only used by the aliases that route to
+# them; they need OPENAI_API_KEY / ANTHROPIC_API_KEY in the environment (see
+# .env.example) and are commented out of the routes below by default.
+
+listen: "127.0.0.1:19080"   # use ":8080" to bind all interfaces
+log_level: info
+
+providers:
+  mock:
+    type: mock
+    latency: 2ms        # simulated time-to-first-byte
+  mock-flaky:
+    type: mock
+    latency: 2ms
+    fail_every: 3       # every 3rd call fails with fail_status
+    fail_status: 503
+  # anthropic:
+  #   type: anthropic
+  #   base_url: https://api.anthropic.com
+  #   api_key_env: ANTHROPIC_API_KEY
+  #   timeout: 120s
+  #   max_concurrency: 32
+  #   default_max_tokens: 1024
+  # openai:
+  #   type: openai
+  #   base_url: https://api.openai.com/v1
+  #   api_key_env: OPENAI_API_KEY
+  #   timeout: 120s
+
+# alias -> ordered fallback chain of provider:model targets
+models:
+  fast: [mock:mock-fast]
+  resilient: [mock-flaky:mock-flaky, mock:mock-fast]
+  # claude: [anthropic:claude-sonnet-5-5, anthropic:claude-haiku-5-5]
+  # gpt: [openai:gpt-4o-mini]
+
+# virtual keys handed to clients; rpm/tpm 0 = unlimited, models empty = all
+keys:
+  gw-demo-key:
+    name: demo
+    rpm: 600
+    tpm: 200000
+    admin: true          # may read /admin/usage
+  gw-restricted-key:
+    name: restricted
+    rpm: 60
+    tpm: 20000
+    models: [fast]
+
+cache:
+  ttl: 5m
+  max_entries: 1000     # 0 disables the cache
+
+retry:
+  max_attempts: 3       # total attempts per target, including the first
+  base_backoff: 100ms
+  max_backoff: 2s
+
+breaker:
+  failures: 5           # consecutive retryable failures that open the circuit
+  open_for: 30s         # then one half-open probe is allowed
+
+# USD per million tokens, merged over the built-in table in
+# internal/config/prices.go (Claude prices as of 2026-10-06 from the
+# claude-api reference). The mock prices below are illustrative only.
+prices:
+  mock-fast: {input: 0.10, output: 0.40}
+  mock-flaky: {input: 0.10, output: 0.40}

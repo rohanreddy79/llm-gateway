@@ -1,0 +1,44 @@
+# Benchmark configuration: a zero-latency mock measures the gateway's own
+# overhead, a 2 ms mock shows concurrency scaling, and a mock that fails one
+# call in ten exercises the retry path. The bench key has no rate limits.
+listen: "127.0.0.1:19081"
+log_level: info
+
+providers:
+  mock:
+    type: mock
+    max_concurrency: 256
+  mock-2ms:
+    type: mock
+    latency: 2ms
+    max_concurrency: 256
+  mock-flaky:
+    type: mock
+    fail_every: 10
+    fail_status: 503
+    max_concurrency: 256
+
+models:
+  fast: [mock:mock-fast]
+  slow: [mock-2ms:mock-2ms]
+  flaky: [mock-flaky:mock-flaky, mock:mock-fast]
+
+keys:
+  gw-bench-key:
+    name: bench
+    admin: true
+
+cache:
+  ttl: 5m
+  max_entries: 10000
+
+retry:
+  max_attempts: 3
+  base_backoff: 1ms
+  max_backoff: 10ms
+
+# Injected failures are periodic, not consecutive; keep the breaker out of
+# the measurement so the flaky row isolates the cost of retries.
+breaker:
+  failures: 50
+  open_for: 5s
