@@ -28,6 +28,9 @@ jobs:
       - name: go vet
         run: go vet ./...
       - name: go test
+        # -race needs cgo on Linux; the build step stays cgo-free.
+        env:
+          CGO_ENABLED: "1"
         run: go test -race ./...
       - name: build
         run: go build ./...
