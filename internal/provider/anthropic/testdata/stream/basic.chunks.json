@@ -1,0 +1,66 @@
+[
+  {
+    "id": "msg_01Stream",
+    "object": "chat.completion.chunk",
+    "created": 1760000000,
+    "model": "claude-opus-5-5",
+    "choices": [
+      {
+        "index": 0,
+        "delta": {
+          "role": "assistant",
+          "content": ""
+        },
+        "finish_reason": null
+      }
+    ]
+  },
+  {
+    "id": "msg_01Stream",
+    "object": "chat.completion.chunk",
+    "created": 1760000000,
+    "model": "claude-opus-5-5",
+    "choices": [
+      {
+        "index": 0,
+        "delta": {
+          "content": "Hello"
+        },
+        "finish_reason": null
+      }
+    ]
+  },
+  {
+    "id": "msg_01Stream",
+    "object": "chat.completion.chunk",
+    "created": 1760000000,
+    "model": "claude-opus-5-5",
+    "choices": [
+      {
+        "index": 0,
+        "delta": {
+          "content": ", world"
+        },
+        "finish_reason": null
+      }
+    ]
+  },
+  {
+    "id": "msg_01Stream",
+    "object": "chat.completion.chunk",
+    "created": 1760000000,
+    "model": "claude-opus-5-5",
+    "choices": [
+      {
+        "index": 0,
+        "delta": {},
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 25,
+      "completion_tokens": 12,
+      "total_tokens": 37
+    }
+  }
+]

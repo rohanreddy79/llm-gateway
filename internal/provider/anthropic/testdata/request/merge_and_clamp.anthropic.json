@@ -1,0 +1,26 @@
+{
+  "model": "claude-sonnet-5-5",
+  "max_tokens": 128,
+  "system": "Rule one.\n\nRule two.",
+  "messages": [
+    {
+      "role": "user",
+      "content": "First\n\nSecond\nThird"
+    },
+    {
+      "role": "assistant",
+      "content": "Reply"
+    },
+    {
+      "role": "user",
+      "content": "Again"
+    }
+  ],
+  "temperature": 1,
+  "top_p": 0.9,
+  "stop_sequences": [
+    "END",
+    "STOP"
+  ],
+  "stream": true
+}

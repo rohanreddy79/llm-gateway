@@ -1,0 +1,24 @@
+{
+  "id": "msg_013Zva2CMHLNnXjNJJKqJ2EF",
+  "object": "chat.completion",
+  "created": 1760000000,
+  "model": "claude-sonnet-5-5",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Part one. Part two that got cut"
+      },
+      "finish_reason": "length"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 132,
+    "completion_tokens": 64,
+    "total_tokens": 196,
+    "prompt_tokens_details": {
+      "cached_tokens": 100
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "msg_stop",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-haiku-5-5",
+  "content": [{"type": "text", "text": "until here"}],
+  "stop_reason": "stop_sequence",
+  "stop_sequence": "END",
+  "usage": {"input_tokens": 3, "output_tokens": 2}
+}

@@ -1,0 +1,6 @@
+{
+  "model": "claude-haiku-5-5",
+  "messages": [{"role": "user", "content": "Hello"}],
+  "temperature": 0,
+  "tools": [{"type": "function", "function": {"name": "ignored_by_translation"}}]
+}

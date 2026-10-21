@@ -1,0 +1,16 @@
+{
+  "model": "claude-sonnet-5-5",
+  "messages": [
+    {"role": "developer", "content": "Rule one."},
+    {"role": "system", "content": [{"type": "text", "text": "Rule two."}]},
+    {"role": "user", "content": "First"},
+    {"role": "user", "content": [{"type": "text", "text": "Second"}, {"type": "text", "text": "Third"}]},
+    {"role": "assistant", "content": "Reply"},
+    {"role": "user", "content": "Again"}
+  ],
+  "temperature": 1.7,
+  "top_p": 0.9,
+  "stop": ["END", "STOP"],
+  "stream": true,
+  "max_completion_tokens": 128
+}

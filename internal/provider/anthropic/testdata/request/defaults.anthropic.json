@@ -1,0 +1,11 @@
+{
+  "model": "claude-haiku-5-5",
+  "max_tokens": 1024,
+  "messages": [
+    {
+      "role": "user",
+      "content": "Hello"
+    }
+  ],
+  "temperature": 0
+}
